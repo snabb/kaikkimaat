@@ -1,4 +1,4 @@
-Kaikki maat CSV-tiedostossa (Suomeksi)
+Kaikki maat CSV-tiedostossa (suomeksi)
 ======================================
 
 Lähteenä käytetään EU:n julkaisutoimiston suomenkielistä valtioiden,
