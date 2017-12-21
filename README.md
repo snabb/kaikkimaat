@@ -17,11 +17,11 @@ Luettelo sisältää seuraavat kentät:
 8. Valuuttakoodi
 9. Rahan alayksikkö
 
-Maakoodit ovat ISO 3166-1 alpha-2 mukaisia, paitsi Kreikan ja Yhdistyneen
-kuningaskunnan osalta käytössä on koodit EL ja UK. Tästä ja muista EU-
-erikoisuuksista on tarkempia tietoja lähdedokumentissa.
+Maakoodit ovat muuten ISO 3166-1 alpha-2 mukaisia, paitsi Kreikan ja
+Yhdistyneen kuningaskunnan osalta käytössä on koodit `EL` ja `UK`. Tästä
+ja muista EU-erikoisuuksista on tarkempia tietoja lähdedokumentissa.
 
-CSV-muotoisen tiedoston saa tuotettua ajamalla:
+CSV-muotoisen tiedoston saa päivitettyä ajamalla:
 
 `go run genkaikkimaat.go > kaikkimaat.csv`
 
