@@ -4,18 +4,15 @@ import (
 	"astuart.co/goq"
 	"encoding/csv"
 	"fmt"
+	"golang.org/x/net/html/charset"
 	"net/http"
 	"os"
-	"regexp"
-	"strings"
 )
 
-const URL = "http://publications.europa.eu/code/fi/fi-5000500.htm"
+const URL = "http://www.stat.fi/meta/luokitukset/valtio/001-2012/index.html"
 
-// Structured representation for github file name tableRows
 type Table struct {
-	Headings []string   `goquery:"table#listOfCountriesTable tr:nth-child(1) th"`
-	Rows     []TableRow `goquery:"table#listOfCountriesTable tr:nth-child(n+2)"`
+	Rows []TableRow `goquery:"table table tr"`
 }
 
 type TableRow struct {
@@ -30,55 +27,19 @@ func checkErr(str string, err error) {
 }
 
 func main() {
-	// haetaan lähdedokumentti
 	res, err := http.Get(URL)
 	checkErr("error getting "+URL+":", err)
 	defer res.Body.Close()
 
+	rdr, err := charset.NewReader(res.Body, res.Header.Get("Content-Type"))
+	checkErr("error determining character set:", err)
+
 	var t Table
 
-	err = goq.NewDecoder(res.Body).Decode(&t)
+	err = goq.NewDecoder(rdr).Decode(&t)
 	checkErr("error decoding:", err)
 
-	// taulukon ensimmäinen sarake on tyhjä jostain syystä, poista
-	if len(t.Headings) > 0 && t.Headings[0] == "" {
-		t.Headings = t.Headings[1:]
-		for i := range t.Rows {
-			if len(t.Rows[i].Cols) > 0 {
-				t.Rows[i].Cols = t.Rows[i].Cols[1:]
-			}
-		}
-	}
-	// skipataan rivit joissa ei ole kaikkia tietoja
-	var newRows []TableRow
-	for _, r := range t.Rows {
-		if len(r.Cols) != len(t.Headings) {
-			continue
-		}
-		newRows = append(newRows, r)
-	}
-	t.Rows = newRows
-
-	// poistetaan soft hyphenit, nbsp:t ja rivinvaihdot
-	repl := strings.NewReplacer("\u00ad", "", "\u00a0", "", "-\n", "", "\n", " ")
-	// sekä muu roska
-	fixRe := regexp.MustCompile(`\s*\(.*\)$|^—$`)
-	for i, str := range t.Headings {
-		str = repl.Replace(str)
-		t.Headings[i] = fixRe.ReplaceAllLiteralString(str, "")
-	}
-	for i, r := range t.Rows {
-		for j, c := range r.Cols {
-			c = repl.Replace(c)
-			t.Rows[i].Cols[j] = fixRe.ReplaceAllLiteralString(c, "")
-		}
-	}
-
-	// ulostetaan csv
 	wr := csv.NewWriter(os.Stdout)
-
-	err = wr.Write(t.Headings)
-	checkErr("error writing:", err)
 
 	for _, r := range t.Rows {
 		err = wr.Write(r.Cols)

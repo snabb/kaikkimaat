@@ -1,25 +1,18 @@
 Kaikki maat CSV-tiedostossa (suomeksi)
 ======================================
 
-Lähteenä käytetään EU:n julkaisutoimiston suomenkielistä valtioiden,
-alueiden ja rahayksiköiden luetteloa:
+Lähteenä käytetään Tilastokeskuksen kansallisen luokitussuosituksen alueluokitusten
+valtiot ja maat -luetteloa:
 
-http://publications.europa.eu/code/fi/fi-5000500.htm
+http://www.stat.fi/meta/luokitukset/valtio/001-2012/index.html
 
 Luettelo sisältää seuraavat kentät:
-1. Valtio
-2. Koko nimi
-3. Maakoodi
-4. Pääkaupunki / hallinnollinen keskus
-5. Asukkaannimi
-6. Adjektiivi
-7. Rahayksikkö
-8. Valuuttakoodi
-9. Rahan alayksikkö
+1. numeerinen maakoodi
+2. 2-kirjaiminen maakoodi
+3. 3-kirjaiminen maakoodi
+4. maan nimi suomeksi
 
-Maakoodit ovat muuten ISO 3166-1 alpha-2 mukaisia, paitsi Kreikan ja
-Yhdistyneen kuningaskunnan osalta käytössä on koodit `EL` ja `UK`. Tästä
-ja muista EU-erikoisuuksista on tarkempia tietoja lähdedokumentissa.
+Maakoodit ovat ISO 3166-1 mukaisia.
 
 CSV-muotoisen tiedoston saa päivitettyä ajamalla:
 
