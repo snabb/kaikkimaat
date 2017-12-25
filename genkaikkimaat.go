@@ -21,30 +21,30 @@ type TableRow struct {
 
 func checkErr(str string, err error) {
 	if err != nil {
-		fmt.Fprintln(os.Stderr, str, err)
+		fmt.Fprintln(os.Stderr, str+":", err)
 		os.Exit(1)
 	}
 }
 
 func main() {
 	res, err := http.Get(URL)
-	checkErr("error getting "+URL+":", err)
+	checkErr("error getting "+URL, err)
 	defer res.Body.Close()
 
 	rdr, err := charset.NewReader(res.Body, res.Header.Get("Content-Type"))
-	checkErr("error determining character set:", err)
+	checkErr("error determining character set", err)
 
 	var t Table
 
 	err = goq.NewDecoder(rdr).Decode(&t)
-	checkErr("error decoding:", err)
+	checkErr("error decoding", err)
 
 	wr := csv.NewWriter(os.Stdout)
 
 	for _, r := range t.Rows {
 		err = wr.Write(r.Cols)
-		checkErr("error writing:", err)
+		checkErr("error writing", err)
 	}
 	wr.Flush()
-	checkErr("error writing:", wr.Error())
+	checkErr("error writing", wr.Error())
 }
