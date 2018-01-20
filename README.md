@@ -12,6 +12,8 @@ Luettelo sisältää seuraavat kentät:
 3. kolmikirjaiminen maakoodi (ISO 3166-1 alpha-3)
 4. maan nimi suomeksi
 
+Merkistönä UTF-8.
+
 CSV-muotoisen tiedoston saa päivitettyä ajamalla:
 
 `go run genkaikkimaat.go > kaikkimaat.csv`
