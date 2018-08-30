@@ -22,6 +22,6 @@ riviltä.
 
 CSV-muotoisen tiedoston saa tarvittaessa luotua tai päivitettyä seuraavasti:
 1. Tarvitset Go-kääntäjän, jonka asennusohje löytyy seuraavasta
-   osoitteesta: https://golang.org/doc/install)
+   osoitteesta: https://golang.org/doc/install
 2. Aja sen jälkeen: `go run genkaikkimaat.go > kaikkimaat.csv`
 
